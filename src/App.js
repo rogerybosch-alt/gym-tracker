@@ -151,17 +151,17 @@ const SvgLineChart = ({ series, yMax, xLabels, refY, refLabel }) => {
   const yTicks = Array.from({ length: 5 }, (_, i) => Math.round((yMax / 4) * i));
 
   const makePath = (data, connectNulls) => {
-    let d = '';
+    let path = '';
     data.forEach((v, i) => {
       if (v == null) return;
-      const x = toX(i), y = toY(v);
+      const px = toX(i), py = toY(v);
       const prevValid = connectNulls
-        ? data.slice(0, i).some(x => x != null)
+        ? data.slice(0, i).some(val => val != null)
         : data[i - 1] != null;
-      if (!prevValid || d === '') d += `M${x.toFixed(1)},${y.toFixed(1)}`;
-      else d += `L${x.toFixed(1)},${y.toFixed(1)}`;
+      if (!prevValid || path === '') path += `M${px.toFixed(1)},${py.toFixed(1)}`;
+      else path += `L${px.toFixed(1)},${py.toFixed(1)}`;
     });
-    return d;
+    return path;
   };
 
   return (
@@ -556,5 +556,3 @@ export default function GymTracker() {
     </div>
   );
 }
-
-
